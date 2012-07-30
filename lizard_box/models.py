@@ -73,6 +73,9 @@ class Box(models.Model):
 
 
 class ColumnBox(models.Model):
+    """
+    A box in a column.
+    """
     name = models.CharField(max_length=80, null=True, blank=True)
     box = models.ForeignKey(Box)
     column = models.ForeignKey(Column)
@@ -89,6 +92,7 @@ class ColumnBox(models.Model):
         return self.box.render()
 
     def display_name(self):
+        """Display this name in a view"""
         if self.name:
             return self.name
         else:
