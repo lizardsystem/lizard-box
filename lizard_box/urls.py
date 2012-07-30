@@ -11,12 +11,12 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^ui/', include('lizard_ui.urls')),
+    # url(r'^ui/', include('lizard_ui.urls')),
     # url(r'^map/', include('lizard_map.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    # url(r'^something/',
-    #     views.some_method,
-    #     name="name_it"),
+    url(r'^layout/(?P<slug>[^/]+)/',
+        views.LayoutView.as_view(),
+        name="lizard_box_layoutview"),
     # url(r'^something_else/$',
     #     views.SomeClassBasedView.as_view(),
     #     name='name_it_too'),
