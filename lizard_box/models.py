@@ -67,7 +67,7 @@ class Box(models.Model):
             if self.template:
                 return self.template
             else:
-                return 'Fill template of box named "%s"' % self.name
+                return 'Empty box: fill template of box named "%s"' % self.name
         elif self.box_type == 2:
             return '<iframe src="%s" frameborder="0">IFrame contents</iframe>' % self.url
 
