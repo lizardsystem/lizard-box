@@ -25,5 +25,9 @@ $ ->
     $(".vertical-item-fixed").each (index, elem) ->
         $(elem).height($(elem).attr('data-height'))
 
+    $(".box-dialog").live("click", () ->
+        $(this).dialog({title: $(this).attr("data-title")})
+        )
+
     # divide the spaces
     divideVerticalSpaceEqually()

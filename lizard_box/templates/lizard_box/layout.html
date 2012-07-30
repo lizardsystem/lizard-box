@@ -56,7 +56,7 @@ You can use vertical-item-fixed like this:
       <div class="box {% if columnbox.height %}vertical-item-fixed{% else %}vertical-item{% endif %}"{% if columnbox.height %} data-height="{{ columnbox.height }}"{% endif %}>
         <div class="box-header">
           {{ columnbox.display_name }}
-          {% for action in columnbox.actions %}<div class="box-action {{ action.icon_class }}">{{ action }}</div>{% endfor %}
+          {% for action in columnbox.actions %}<div class="box-action {{ action.icon_class }}"><div class="box-dialog" data-title="{{ action }}">{{ action.render }}</div></div>{% endfor %}
         </div>
         <div class="box-contents">
           {% autoescape off %}

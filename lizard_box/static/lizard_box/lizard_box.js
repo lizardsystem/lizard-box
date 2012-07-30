@@ -20,6 +20,11 @@
     $(".vertical-item-fixed").each(function(index, elem) {
       return $(elem).height($(elem).attr('data-height'));
     });
+    $(".box-dialog").live("click", function() {
+      return $(this).dialog({
+        title: $(this).attr("data-title")
+      });
+    });
     return divideVerticalSpaceEqually();
   });
 

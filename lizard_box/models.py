@@ -108,4 +108,10 @@ class ColumnBox(models.Model):
             return self.box.name
 
     def actions(self):
+        """
+        Standard actions show in a popup. However, special actions
+        like maximize or minimize can be "grabbed" by name in
+        javascript lizard_box.js. These special actions do not exist
+        yet.
+        """
         return self.action_boxes.all()
