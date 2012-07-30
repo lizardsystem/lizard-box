@@ -41,6 +41,8 @@ class Column(models.Model):
 class Box(models.Model):
     """
     A content holding item.
+
+    Can be used to display a part of a screen, or part of an "action" popup in upper right corner of a columnbox.
     """
     BOX_TYPE_CHOICES = (
         (1, "template in box"),
@@ -49,6 +51,11 @@ class Box(models.Model):
     name = models.CharField(
         _('title'),
         max_length=80)
+    icon_class = models.CharField(
+        max_length=80,
+        null=True,
+        blank=True,
+        help_text="bootstrap iconnames used as action in upper right corner: http://twitter.github.com/bootstrap/base-css.html")
     box_type = models.IntegerField(choices=BOX_TYPE_CHOICES, default=1)
     template = models.TextField(
         null=True, blank=True,
@@ -86,6 +93,8 @@ class ColumnBox(models.Model):
         null=True,
         blank=True,
         help_text=_("Height in pixels, stretch if omitted"))
+    # Upper right corner, actions can be info, maximize
+    action_boxes = models.ManyToManyField("Box", related_name="action_boxes")
 
     # add box_parameters?
     def render_box(self):
@@ -97,3 +106,6 @@ class ColumnBox(models.Model):
             return self.name
         else:
             return self.box.name
+
+    def actions(self):
+        return self.action_boxes.all()
