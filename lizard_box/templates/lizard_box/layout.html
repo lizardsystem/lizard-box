@@ -1,0 +1,66 @@
+{% extends "lizard_ui/realbase.html" %}
+
+{% block title %}
+{{ view.layout }}
+{% endblock title %}
+
+{% block content-actions %}
+{% endblock content-actions %}
+
+
+Testing css
+{% block css %}
+{{ block.super }}
+<style type="text/css">
+.box-header {
+background-color: #7FA9AE;
+background-image: -webkit-linear-gradient(left, #9ebec2, #7fa9ae);
+background-image: -o-linear-gradient(left, #9ebec2, #7fa9ae);
+background-image: linear-gradient(left, #9ebec2, #7fa9ae);
+background-repeat: repeat-x;
+border-bottom: 1px solid #7FA9AE;
+padding: 5px 13px 5px 13px;
+//margin-left: -13px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+}
+.box-contents {
+    margin-left: 5px;
+}
+#main-container {
+    margin-top: 10px;
+}
+</style>
+{% endblock css %}
+
+
+{% block javascript %}
+  {{ block.super }}
+  <script type="text/javascript"
+          src="{{ STATIC_URL }}lizard_box/lizard_box.js"></script>
+{% endblock javascript %}
+
+You can use vertical-item-fixed like this:
+      <div class="box vertical-item-fixed" data-height="100">
+      </div>
+
+
+{% block main-area %}
+<div class="container-fluid" id="main-container">
+  <div class="row-fluid">
+    {% for column in view.layout.column_set.all %}
+    <div class="span{{ column.width }} evenly-spaced-vertical">
+      {% for columnbox in column.columnbox_set.all %}
+      <div class="box vertical-item">
+        <div class="box-header">Box title</div>
+        <div class="box-contents">
+        box {{ columnbox.box }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<div id="footer"></div>
+{% endblock main-area %}

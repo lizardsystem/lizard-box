@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext as _
+from django.shortcuts import get_object_or_404
 # from django.core.urlresolvers import reverse
 # from lizard_map.views import MapView
 from lizard_ui.views import UiView
@@ -17,9 +18,3 @@ class LayoutView(UiView):
     @property
     def layout(self):
         return get_object_or_404(models.Layout, slug=self.kwargs['slug'])
-
-
-# class Todo2View(MapView):
-#     """Simple view with a map."""
-#     template_name = 'lizard_box/todo2.html'
-#     page_title = _('TODO 2 view')
