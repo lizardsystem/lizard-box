@@ -20,7 +20,6 @@ background-image: linear-gradient(left, #9ebec2, #7fa9ae);
 background-repeat: repeat-x;
 border-bottom: 1px solid #7FA9AE;
 padding: 5px 13px 5px 13px;
-//margin-left: -13px;
 -webkit-border-radius: 3px;
 -moz-border-radius: 3px;
 }
@@ -51,10 +50,12 @@ You can use vertical-item-fixed like this:
     {% for column in view.layout.column_set.all %}
     <div class="span{{ column.width }} evenly-spaced-vertical">
       {% for columnbox in column.columnbox_set.all %}
-      <div class="box vertical-item">
-        <div class="box-header">Box title</div>
+      <div class="box {% if columnbox.height %}vertical-item-fixed{% else %}vertical-item{% endif %}"{% if columnbox.height %} data-height="{{ columnbox.height }}"{% endif %}>
+        <div class="box-header">{{ columnbox.display_name }}</div>
         <div class="box-contents">
-        box {{ columnbox.box }}
+          {% autoescape off %}
+          {{ columnbox.render_box }}
+          {% endautoescape %}
         </div>
       </div>
       {% endfor %}

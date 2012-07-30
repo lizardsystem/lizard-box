@@ -18,9 +18,12 @@ divideVerticalSpaceEqually = () ->
         $(element).find('.vertical-item').height(verticalItemHeight)
 
 $ ->
-    console.log("hoi")
+    # give the evenly-spaced-vertical container its full height
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height())
+
+    # apply all fixed heights
     $(".vertical-item-fixed").each (index, elem) ->
-        console.log($(elem))
         $(elem).height($(elem).attr('data-height'))
+
+    # divide the spaces
     divideVerticalSpaceEqually()

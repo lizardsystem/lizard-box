@@ -16,10 +16,8 @@
   };
 
   $(function() {
-    console.log("hoi");
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height());
     $(".vertical-item-fixed").each(function(index, elem) {
-      console.log($(elem));
       return $(elem).height($(elem).attr('data-height'));
     });
     return divideVerticalSpaceEqually();
