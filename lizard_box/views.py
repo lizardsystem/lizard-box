@@ -41,8 +41,8 @@ class BoxView(UiView):
     """
 
     template_name = 'lizard_box/box.html'
-    page_title = 'Box'
+    page_title = 'Box'  # apparently used for breadcrumbs
 
     @property
     def box(self):
-        return get_object_or_404(models.Box, name=self.kwargs['name'])
+        return get_object_or_404(models.Box, slug=self.kwargs['slug'])

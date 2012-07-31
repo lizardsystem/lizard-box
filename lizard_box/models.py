@@ -108,6 +108,9 @@ class Box(models.Model):
     name = models.CharField(
         _('title'),
         max_length=80)
+    slug = models.SlugField(
+        _('slug'),
+        help_text=_("Used in the URL."))
     icon_class = models.CharField(
         max_length=80,
         null=True,
