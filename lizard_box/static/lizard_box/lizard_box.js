@@ -39,4 +39,9 @@
     return divideVerticalSpaceEqually();
   });
 
+  $(window).resize(function() {
+    $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height());
+    return divideVerticalSpaceEqually();
+  });
+
 }).call(this);

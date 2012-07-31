@@ -49,3 +49,12 @@ $ ->
 
     # divide the spaces
     divideVerticalSpaceEqually()
+
+
+$(window).resize( () ->
+    # give the evenly-spaced-vertical container its full height
+    $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height())
+    # divide the spaces
+    divideVerticalSpaceEqually()
+    )
+
