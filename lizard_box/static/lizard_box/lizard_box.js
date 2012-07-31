@@ -20,10 +20,15 @@
     $(".vertical-item-fixed").each(function(index, elem) {
       return $(elem).height($(elem).attr('data-height'));
     });
-    $(".box-dialog").live("click", function() {
-      return $(this).dialog({
-        title: $(this).attr("data-title")
-      });
+    $(".box-dialog").dialog({
+      autoOpen: false,
+      title: $(this).attr("data-title")
+    });
+    $(".box-action").live("click", function() {
+      var temp_id;
+      temp_id = $(this).attr("data-temp-id");
+      console.log(temp_id);
+      return $("div.box-dialog[data-temp-id=\"" + temp_id + "\"]").dialog('open');
     });
     return divideVerticalSpaceEqually();
   });

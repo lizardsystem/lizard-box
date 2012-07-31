@@ -14,7 +14,11 @@ from lizard_box import models
 class LayoutView(UiView):
     """Layout"""
     template_name = 'lizard_box/layout.html'
-    page_title = _('Layout')
+    #page_title = _('Layout')
+
+    @property
+    def page_title(self):
+        return str(self.layout)
 
     @property
     def site_actions(self):
@@ -41,7 +45,11 @@ class BoxView(UiView):
     """
 
     template_name = 'lizard_box/box.html'
-    page_title = 'Box'  # apparently used for breadcrumbs
+    #page_title = 'Box'  # apparently used for breadcrumbs
+
+    @property
+    def page_title(self):
+        return str(self.box)
 
     @property
     def box(self):

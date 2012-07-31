@@ -26,14 +26,19 @@ $ ->
         $(elem).height($(elem).attr('data-height'))
 
     # make .box-dialog show dialogs
-    $(".box-dialog").live("click", () ->
-        $(this).dialog({title: $(this).attr("data-title")})
-        )
-
-    # $(".box-dialog").dialog({autoOpen: false, title: $(this).attr("data-title")})
     # $(".box-dialog").live("click", () ->
-    #     $(this).dialog('open')
-    # )
+    #     $(this).dialog({title: $(this).attr("data-title")})
+    #     )
+
+    $(".box-dialog").dialog({autoOpen: false, title: $(this).attr("data-title")})
+    # Find the item by slug, because the dialog itself has moved/vanished.
+    $(".box-action").live("click", () ->
+        temp_id = $(this).attr("data-temp-id")
+        console.log(temp_id)
+        $("div.box-dialog[data-temp-id=\""+temp_id+"\"]").dialog('open')
+
+        #alert("hallo")
+    )
 
     # divide the spaces
     divideVerticalSpaceEqually()
