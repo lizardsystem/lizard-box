@@ -49,7 +49,7 @@ class PortalTab(models.Model):
     destination_slug = models.SlugField(
         help_text="in case of 'another lizard-box Layout'",
         null=True, blank=True)
-    destination_url = models.URLField(
+    destination_url = models.CharField(
         help_text="URL in case of generic link",
         max_length=200,
         null=True, blank=True)
@@ -155,7 +155,12 @@ class ColumnBox(models.Model):
         blank=True,
         help_text=_("Height in pixels, stretch if omitted"))
     # Upper right corner, actions can be info, maximize
-    action_boxes = models.ManyToManyField("Box", related_name="action_boxes")
+    action_boxes = models.ManyToManyField(
+        "Box", related_name="action_boxes", null=True, blank=True)
+    maximize_action = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('index', )
 
     # add box_parameters?
     def render_box(self):
@@ -170,9 +175,13 @@ class ColumnBox(models.Model):
 
     def actions(self):
         """
-        Standard actions show in a popup. However, special actions
-        like maximize or minimize can be "grabbed" by name in
-        javascript lizard_box.js. These special actions do not exist
-        yet.
+        Standard actions show in a popup. However, special actions can
+        be "grabbed" by name in javascript lizard_box.js. These
+        special actions do not exist yet.
         """
-        return self.action_boxes.all()
+        result = list(self.action_boxes.all())
+        if self.maximize_action:
+            action_box = self.box
+            action_box.icon_class = 'icon-plus-sign'
+            result.insert(0, action_box)
+        return result

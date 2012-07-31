@@ -11,7 +11,8 @@
         return excludedItemsHeight += $(fixed_element).innerHeight();
       });
       verticalItemHeight = Math.floor((mainContentHeight - excludedItemsHeight) / numberOfItems) - 1;
-      return $(element).find('.vertical-item').height(verticalItemHeight);
+      $(element).find('.vertical-item').height(verticalItemHeight);
+      return $(element).find('iframe').height(verticalItemHeight - 83);
     });
   };
 
@@ -23,6 +24,7 @@
     $(".box-dialog").dialog({
       autoOpen: false,
       title: $(this).attr("data-title"),
+      minHeight: 400,
       width: 900,
       height: 600
     });

@@ -16,6 +16,7 @@ divideVerticalSpaceEqually = () ->
         verticalItemHeight = Math.floor(
             ((mainContentHeight-excludedItemsHeight) / numberOfItems)) - 1
         $(element).find('.vertical-item').height(verticalItemHeight)
+        $(element).find('iframe').height(verticalItemHeight - 83)
 
 $ ->
     # give the evenly-spaced-vertical container its full height
@@ -33,6 +34,7 @@ $ ->
     $(".box-dialog").dialog({
       autoOpen: false,
       title: $(this).attr("data-title"),
+      minHeight: 400,
       width: 900,
       height: 600})
     # Find the item by slug, because the dialog itself has moved/vanished.

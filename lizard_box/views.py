@@ -24,7 +24,6 @@ class LayoutView(UiView):
     def site_actions(self):
         actions = []
         for portal_tab in self.layout.portal_tabs.all():
-            print portal_tab
             actions.append(
                 Action(
                     name=portal_tab.name,
