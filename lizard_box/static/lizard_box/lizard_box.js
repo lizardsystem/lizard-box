@@ -22,7 +22,9 @@
     });
     $(".box-dialog").dialog({
       autoOpen: false,
-      title: $(this).attr("data-title")
+      title: $(this).attr("data-title"),
+      width: 900,
+      height: 600
     });
     $(".box-action").live("click", function() {
       var temp_id;

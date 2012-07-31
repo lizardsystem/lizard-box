@@ -30,7 +30,11 @@ $ ->
     #     $(this).dialog({title: $(this).attr("data-title")})
     #     )
 
-    $(".box-dialog").dialog({autoOpen: false, title: $(this).attr("data-title")})
+    $(".box-dialog").dialog({
+      autoOpen: false,
+      title: $(this).attr("data-title"),
+      width: 900,
+      height: 600})
     # Find the item by slug, because the dialog itself has moved/vanished.
     $(".box-action").live("click", () ->
         temp_id = $(this).attr("data-temp-id")
