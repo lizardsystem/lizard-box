@@ -16,7 +16,8 @@ divideVerticalSpaceEqually = () ->
         verticalItemHeight = Math.floor(
             ((mainContentHeight-excludedItemsHeight) / numberOfItems)) - 1
         $(element).find('.vertical-item').height(verticalItemHeight)
-        $(element).find('iframe').height(verticalItemHeight - 83)
+        $(element).find('.vertical-item .box-contents').height(verticalItemHeight - 30)
+        $(element).find('.vertical-item iframe').height(verticalItemHeight - 40)  # let outer scrollbar disappear
 
 $ ->
     # give the evenly-spaced-vertical container its full height
@@ -38,12 +39,12 @@ $ ->
       width: 900,
       height: 600})
     # Find the item by slug, because the dialog itself has moved/vanished.
-    $(".box-action").live("click", () ->
+    $(".box-action").live("click", (event) ->
+        event.preventDefault()
         temp_id = $(this).attr("data-temp-id")
-        console.log(temp_id)
+        # console.log(temp_id)
         $("div.box-dialog[data-temp-id=\""+temp_id+"\"]").dialog('open')
-
-        #alert("hallo")
+        return false;
     )
 
     # divide the spaces

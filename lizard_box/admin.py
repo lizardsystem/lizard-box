@@ -33,8 +33,12 @@ class ColumnAdmin(admin.ModelAdmin):
         ]
 
 
+class BoxAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name", )}
+
+
 admin.site.register(models.Layout, LayoutAdmin)
 admin.site.register(models.Column, ColumnAdmin)
-admin.site.register(models.Box)
+admin.site.register(models.Box, BoxAdmin)
 admin.site.register(models.PortalTab)
 

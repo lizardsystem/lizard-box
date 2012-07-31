@@ -12,7 +12,8 @@
       });
       verticalItemHeight = Math.floor((mainContentHeight - excludedItemsHeight) / numberOfItems) - 1;
       $(element).find('.vertical-item').height(verticalItemHeight);
-      return $(element).find('iframe').height(verticalItemHeight - 83);
+      $(element).find('.vertical-item .box-contents').height(verticalItemHeight - 30);
+      return $(element).find('.vertical-item iframe').height(verticalItemHeight - 40);
     });
   };
 
@@ -28,11 +29,12 @@
       width: 900,
       height: 600
     });
-    $(".box-action").live("click", function() {
+    $(".box-action").live("click", function(event) {
       var temp_id;
+      event.preventDefault();
       temp_id = $(this).attr("data-temp-id");
-      console.log(temp_id);
-      return $("div.box-dialog[data-temp-id=\"" + temp_id + "\"]").dialog('open');
+      $("div.box-dialog[data-temp-id=\"" + temp_id + "\"]").dialog('open');
+      return false;
     });
     return divideVerticalSpaceEqually();
   });
