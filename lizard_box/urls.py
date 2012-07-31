@@ -17,7 +17,10 @@ urlpatterns = patterns(
     url(r'^layout/(?P<slug>[^/]+)/',
         views.LayoutView.as_view(),
         name="lizard_box_layoutview"),
-    # url(r'^something_else/$',
+    url(r'^box/(?P<name>[^/]+)/',
+        views.BoxView.as_view(),
+        name="lizard_box_boxview"),
+   # url(r'^something_else/$',
     #     views.SomeClassBasedView.as_view(),
     #     name='name_it_too'),
     )

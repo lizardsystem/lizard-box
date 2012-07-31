@@ -10,6 +10,10 @@ class ColumnInline(admin.TabularInline):
     model = models.Column
 
 
+class LayoutPortalTabInline(admin.TabularInline):
+    model = models.LayoutPortalTab
+
+
 class ColumnBoxInline(admin.TabularInline):
     model = models.ColumnBox
 
@@ -18,7 +22,7 @@ class LayoutAdmin(admin.ModelAdmin):
     list_display = ('slug', 'title')
     prepopulated_fields = {"slug": ("title",)}
     inlines = [
-        ColumnInline,
+        ColumnInline, LayoutPortalTabInline,
         ]
 
 
@@ -32,4 +36,5 @@ class ColumnAdmin(admin.ModelAdmin):
 admin.site.register(models.Layout, LayoutAdmin)
 admin.site.register(models.Column, ColumnAdmin)
 admin.site.register(models.Box)
+admin.site.register(models.PortalTab)
 

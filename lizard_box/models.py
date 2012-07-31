@@ -1,6 +1,7 @@
 # (c) Nelen & Schuurmans.  GPL licensed, see LICENSE.rst.
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -15,9 +16,65 @@ class Layout(models.Model):
     slug = models.SlugField(
         _('slug'),
         help_text=_("Used in the URL."))
+    portal_tabs = models.ManyToManyField("PortalTab", through="LayoutPortalTab")
 
     def __unicode__(self):
         return self.title
+
+
+class PortalTab(models.Model):
+    """
+    A portal tab to link to other pages.
+
+    You can define them on each layout.
+    """
+    TAB_TYPE_LAYOUT = 1
+    TAB_TYPE_LINK = 2
+
+    TAB_TYPE_CHOICES = (
+        (TAB_TYPE_LAYOUT, "another lizard-box Layout"),
+        (TAB_TYPE_LINK, "generic link"))
+
+    name = models.CharField(max_length=40)
+    description = models.TextField(null=True, blank=True)
+    icon_class = models.CharField(
+        max_length=80,
+        null=True,
+        blank=True,
+        help_text="bootstrap iconnames used as action in upper right corner: http://twitter.github.com/bootstrap/base-css.html")
+
+    tab_type = models.IntegerField(
+        choices=TAB_TYPE_CHOICES,
+        default=TAB_TYPE_LAYOUT)
+    destination_slug = models.SlugField(
+        help_text="in case of 'another lizard-box Layout'",
+        null=True, blank=True)
+    destination_url = models.URLField(
+        help_text="URL in case of generic link",
+        max_length=200,
+        null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        """
+        Calc destination url. The url does not really represent this
+        object. On the other side, it does.
+        """
+        if self.tab_type == self.TAB_TYPE_LAYOUT:
+            return reverse(
+                "lizard_box_layoutview",
+                kwargs={"slug": self.destination_slug})
+        else:
+            return self.destination_url
+
+
+class LayoutPortalTab(models.Model):
+    """A portal tab in a layout"""
+    layout = models.ForeignKey(Layout)
+    portal_tab = models.ForeignKey(PortalTab)
+    index = models.IntegerField(default=100)
 
 
 class Column(models.Model):
@@ -60,7 +117,8 @@ class Box(models.Model):
     template = models.TextField(
         null=True, blank=True,
         help_text="For box_type 'template in box'")
-    url = models.URLField(
+    url = models.CharField(
+        max_length=200,
         null=True,
         blank=True,
         help_text=_("For box_type 'iframe', url for iframe")

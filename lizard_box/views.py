@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 # from django.core.urlresolvers import reverse
 # from lizard_map.views import MapView
 from lizard_ui.views import UiView
+from lizard_ui.layout import Action
 
 from lizard_box import models
 
@@ -16,5 +17,32 @@ class LayoutView(UiView):
     page_title = _('Layout')
 
     @property
+    def site_actions(self):
+        actions = []
+        for portal_tab in self.layout.portal_tabs.all():
+            print portal_tab
+            actions.append(
+                Action(
+                    name=portal_tab.name,
+                    description=portal_tab.description,
+                    url=portal_tab.get_absolute_url(),
+                    icon=portal_tab.icon_class)
+                )
+        return actions + super(LayoutView, self).site_actions
+
+    @property
     def layout(self):
         return get_object_or_404(models.Layout, slug=self.kwargs['slug'])
+
+
+class BoxView(UiView):
+    """Display a single box in full screen, with surrounding lizard-ui
+    items.
+    """
+
+    template_name = 'lizard_box/box.html'
+    page_title = 'Box'
+
+    @property
+    def box(self):
+        return get_object_or_404(models.Box, name=self.kwargs['name'])
