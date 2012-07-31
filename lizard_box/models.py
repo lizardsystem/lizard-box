@@ -91,6 +91,9 @@ class Column(models.Model):
         help_text=_("Determines order of columns"))
     boxes = models.ManyToManyField("Box", through="ColumnBox")
 
+    class Meta:
+        ordering = ('layout', 'index', )
+
     def __unicode__(self):
         return u'%s %d' % (self.layout, self.index)
 
