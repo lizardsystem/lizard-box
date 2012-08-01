@@ -20,15 +20,15 @@ tests_require = [
 
 setup(name='lizard-box',
       version=version,
-      description="TODO",
+      description="Build flexible layouts with columns and boxes in columns",
       long_description=long_description,
       # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Programming Language :: Python',
                    'Framework :: Django',
                    ],
       keywords=[],
-      author='TODO',
-      author_email='TODO@nelen-schuurmans.nl',
+      author='Jack Ha',
+      author_email='jack.ha@nelen-schuurmans.nl',
       url='',
       license='GPL',
       packages=['lizard_box'],
