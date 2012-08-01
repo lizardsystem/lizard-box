@@ -32,8 +32,10 @@ $ ->
     #     $(this).dialog({title: $(this).attr("data-title")})
     #     )
 
-    $("#main-container").on("DOMSubtreeModified", (event) ->
+    #  DOMNodeInserted, DOMSubtreeModified
+    $("#main-container").on("DOMNodeInserted", (event) ->
       # every time the DOM changes, check for new boxes
+      console.log("DOM modified event")
       $(".box-dialog").dialog({
         autoOpen: false,
         title: $(this).attr("data-title"),

@@ -22,7 +22,8 @@
     $(".vertical-item-fixed").each(function(index, elem) {
       return $(elem).height($(elem).attr('data-height'));
     });
-    $("#main-container").on("DOMSubtreeModified", function(event) {
+    $("#main-container").on("DOMNodeInserted", function(event) {
+      console.log("DOM modified event");
       return $(".box-dialog").dialog({
         autoOpen: false,
         title: $(this).attr("data-title"),
