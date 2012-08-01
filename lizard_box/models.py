@@ -128,12 +128,11 @@ class Box(models.Model):
     box_type = models.IntegerField(choices=BOX_TYPE_CHOICES, default=BOX_TYPE_TEMPLATE)
     template = models.TextField(
         null=True, blank=True,
-        help_text="For box_type 'template in box'")
-    url = models.CharField(
-        max_length=200,
+        help_text="For box_type 'template in box', or as optional selector in js loader")
+    url = models.TextField(
         null=True,
         blank=True,
-        help_text=_("For box_type 'iframe', url for iframe")
+        help_text=_("For box_type 'iframe', url for iframe or source url for js loader")
         )
 
     def __unicode__(self):
@@ -148,7 +147,11 @@ class Box(models.Model):
         elif self.box_type == self.BOX_TYPE_IFRAME:
             return '<iframe src="%s" frameborder="0">IFrame contents</iframe>' % self.url
         elif self.box_type == self.BOX_TYPE_JSLOAD:
-            return '<div class="javascript-replace" data-src="%s">Loading</div>' % self.url
+            data_src = self.url
+            if self.template:
+                data_src += ' ' + self.template
+            return '<div class="javascript-replace" data-src="%s">Loading</div>' % (
+                data_src)
 
 
 class ColumnBox(models.Model):
