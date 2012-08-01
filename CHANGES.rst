@@ -2,7 +2,7 @@ Changelog of lizard-box
 ===================================================
 
 
-0.1 (unreleased)
+0.1 (2012-08-01)
 ----------------
 
 - Initial Layout view (screen with columns and boxes in it).
