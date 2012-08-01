@@ -104,9 +104,15 @@ class Box(models.Model):
 
     Can be used to display a part of a screen, or part of an "action" popup in upper right corner of a columnbox.
     """
+    BOX_TYPE_TEMPLATE = 1
+    BOX_TYPE_IFRAME = 2
+    BOX_TYPE_JSLOAD = 3
+
     BOX_TYPE_CHOICES = (
         (1, "template in box"),
-        (2, "iframe"),)
+        (2, "iframe"),
+        (3, "js load"),
+        )
 
     name = models.CharField(
         _('title'),
@@ -119,7 +125,7 @@ class Box(models.Model):
         null=True,
         blank=True,
         help_text="bootstrap iconnames used as action in upper right corner: http://twitter.github.com/bootstrap/base-css.html")
-    box_type = models.IntegerField(choices=BOX_TYPE_CHOICES, default=1)
+    box_type = models.IntegerField(choices=BOX_TYPE_CHOICES, default=BOX_TYPE_TEMPLATE)
     template = models.TextField(
         null=True, blank=True,
         help_text="For box_type 'template in box'")
@@ -134,13 +140,15 @@ class Box(models.Model):
         return self.name
 
     def render(self):
-        if self.box_type == 1:
+        if self.box_type == self.BOX_TYPE_TEMPLATE:
             if self.template:
                 return self.template
             else:
                 return 'Empty box: fill template of box named "%s"' % self.name
-        elif self.box_type == 2:
+        elif self.box_type == self.BOX_TYPE_IFRAME:
             return '<iframe src="%s" frameborder="0">IFrame contents</iframe>' % self.url
+        elif self.box_type == self.BOX_TYPE_JSLOAD:
+            return '<div class="javascript-replace" data-src="%s">Loading</div>' % self.url
 
 
 class ColumnBox(models.Model):

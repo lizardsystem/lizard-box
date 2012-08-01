@@ -22,12 +22,14 @@
     $(".vertical-item-fixed").each(function(index, elem) {
       return $(elem).height($(elem).attr('data-height'));
     });
-    $(".box-dialog").dialog({
-      autoOpen: false,
-      title: $(this).attr("data-title"),
-      minHeight: 400,
-      width: 900,
-      height: 600
+    $("#main-container").on("DOMSubtreeModified", function(event) {
+      return $(".box-dialog").dialog({
+        autoOpen: false,
+        title: $(this).attr("data-title"),
+        minHeight: 400,
+        width: 900,
+        height: 600
+      });
     });
     $(".box-action").live("click", function(event) {
       var temp_id;
@@ -36,7 +38,14 @@
       $("div.box-dialog[data-temp-id=\"" + temp_id + "\"]").dialog('open');
       return false;
     });
-    return divideVerticalSpaceEqually();
+    divideVerticalSpaceEqually();
+    return $(".javascript-replace").each(function(index, element) {
+      var url;
+      url = $(this).attr("data-src");
+      return $(this).load(url, function() {
+        return console.log("loaded url " + url);
+      });
+    });
   });
 
   $(window).resize(function() {

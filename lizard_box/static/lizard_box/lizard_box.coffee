@@ -32,12 +32,16 @@ $ ->
     #     $(this).dialog({title: $(this).attr("data-title")})
     #     )
 
-    $(".box-dialog").dialog({
-      autoOpen: false,
-      title: $(this).attr("data-title"),
-      minHeight: 400,
-      width: 900,
-      height: 600})
+    $("#main-container").on("DOMSubtreeModified", (event) ->
+      # every time the DOM changes, check for new boxes
+      $(".box-dialog").dialog({
+        autoOpen: false,
+        title: $(this).attr("data-title"),
+        minHeight: 400,
+        width: 900,
+        height: 600})
+    )
+
     # Find the item by slug, because the dialog itself has moved/vanished.
     $(".box-action").live("click", (event) ->
         event.preventDefault()
@@ -49,6 +53,14 @@ $ ->
 
     # divide the spaces
     divideVerticalSpaceEqually()
+
+    # load the javascript loader based boxes
+    $(".javascript-replace").each((index, element) ->
+      url = $(this).attr("data-src")
+      $(this).load(url, () ->
+        console.log("loaded url " + url)
+      )
+    )
 
 
 $(window).resize( () ->
