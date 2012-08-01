@@ -1,5 +1,5 @@
 (function() {
-  var divideVerticalSpaceEqually;
+  var divideVerticalSpaceEqually, initBoxDialog;
 
   divideVerticalSpaceEqually = function() {
     " For .evenly-spaced-vertical, divide the vertical space evenly between\nthe .vertical-item elements.  Take note of the 4px border between\nthem. Inspired by lizard-ui.\nHandy for forms underneath the graphs, boxes, ....";    return $(".evenly-spaced-vertical").each(function(index, element) {
@@ -17,6 +17,16 @@
     });
   };
 
+  initBoxDialog = function() {
+    return $(".box-dialog").dialog({
+      autoOpen: false,
+      title: $(this).attr("data-title"),
+      minHeight: 400,
+      width: $(window).width() - 200,
+      height: $(window).height() - 200
+    });
+  };
+
   $(function() {
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height());
     $(".vertical-item-fixed").each(function(index, elem) {
@@ -24,13 +34,7 @@
     });
     $("#main-container").on("DOMNodeInserted", function(event) {
       console.log("DOM modified event");
-      return $(".box-dialog").dialog({
-        autoOpen: false,
-        title: $(this).attr("data-title"),
-        minHeight: 400,
-        width: 900,
-        height: 600
-      });
+      return initBoxDialog();
     });
     $(".box-action").live("click", function(event) {
       var temp_id;

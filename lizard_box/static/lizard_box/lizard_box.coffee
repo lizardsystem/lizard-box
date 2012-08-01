@@ -19,6 +19,14 @@ divideVerticalSpaceEqually = () ->
         $(element).find('.vertical-item .box-contents').height(verticalItemHeight - 30)
         $(element).find('.vertical-item iframe').height(verticalItemHeight - 40)  # let outer scrollbar disappear
 
+initBoxDialog = () ->
+    $(".box-dialog").dialog({
+      autoOpen: false,
+      title: $(this).attr("data-title"),
+      minHeight: 400,
+      width: $(window).width() - 200,
+      height: $(window).height() - 200})
+
 $ ->
     # give the evenly-spaced-vertical container its full height
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height())
@@ -36,12 +44,7 @@ $ ->
     $("#main-container").on("DOMNodeInserted", (event) ->
       # every time the DOM changes, check for new boxes
       console.log("DOM modified event")
-      $(".box-dialog").dialog({
-        autoOpen: false,
-        title: $(this).attr("data-title"),
-        minHeight: 400,
-        width: 900,
-        height: 600})
+      initBoxDialog()
     )
 
     # Find the item by slug, because the dialog itself has moved/vanished.
@@ -70,5 +73,6 @@ $(window).resize( () ->
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height())
     # divide the spaces
     divideVerticalSpaceEqually()
+    #initBoxDialog()
     )
 
