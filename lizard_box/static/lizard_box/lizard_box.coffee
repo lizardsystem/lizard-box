@@ -17,7 +17,7 @@ divideVerticalSpaceEqually = () ->
             ((mainContentHeight-excludedItemsHeight) / numberOfItems)) - 1
         $(element).find('.vertical-item').height(verticalItemHeight)
         $(element).find('.vertical-item .box-contents').height(verticalItemHeight - 30)
-        $(element).find('.vertical-item iframe').height(verticalItemHeight - 40)  # let outer scrollbar disappear
+        $(element).find('.vertical-item.box-contents iframe').height(verticalItemHeight - 40)  # let outer scrollbar disappear
 
 initBoxDialog = () ->
     $(".box-dialog").dialog({

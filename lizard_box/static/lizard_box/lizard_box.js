@@ -13,7 +13,7 @@
       verticalItemHeight = Math.floor((mainContentHeight - excludedItemsHeight) / numberOfItems) - 1;
       $(element).find('.vertical-item').height(verticalItemHeight);
       $(element).find('.vertical-item .box-contents').height(verticalItemHeight - 30);
-      return $(element).find('.vertical-item iframe').height(verticalItemHeight - 40);
+      return $(element).find('.vertical-item.box-contents iframe').height(verticalItemHeight - 40);
     });
   };
 
