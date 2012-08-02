@@ -27,6 +27,18 @@ initBoxDialog = () ->
       width: $(window).width() - 200,
       height: $(window).height() - 200})
 
+initTargetLink = () ->
+    $(".target-link").die()
+    $(".target-link").live("click", (event) ->
+        event.preventDefault()
+        source_url = $(this).attr('href')
+        source_group = $(this).attr('data-group')
+        $('.target-destination[data-group="' + source_group + '"]').load(source_url, () ->
+             console.log("Loaded " + source_group)
+        )
+        return false
+    )
+
 $ ->
     # give the evenly-spaced-vertical container its full height
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height())
@@ -45,6 +57,8 @@ $ ->
       # every time the DOM changes, check for new boxes
       console.log("DOM modified event")
       initBoxDialog()
+      $(".accordion").accordion()
+      initTargetLink()
     )
 
     # Find the item by slug, because the dialog itself has moved/vanished.
@@ -68,11 +82,25 @@ $ ->
     )
 
 
+
 $(window).resize( () ->
     # give the evenly-spaced-vertical container its full height
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height())
-    # divide the spaces
+
+      # divide the spaces
     divideVerticalSpaceEqually()
+
     #initBoxDialog()
+
+    # Does not work well: the image maps themselves remain the same.
+    # $(".javascript-replace .box").each(() ->
+    #   height = $(this).innerHeight()
+    #   #width = $(this).width()
+    #   $(this).find("img").height(height)
+    #   #$(this).find("img").width(width)
+    #   )
+
+    #$(".accordion").accordion()
+
     )
 
