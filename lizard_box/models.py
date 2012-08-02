@@ -76,6 +76,9 @@ class LayoutPortalTab(models.Model):
     portal_tab = models.ForeignKey(PortalTab)
     index = models.IntegerField(default=100)
 
+    class Meta:
+        ordering = ('index', )
+
 
 class Column(models.Model):
     """
