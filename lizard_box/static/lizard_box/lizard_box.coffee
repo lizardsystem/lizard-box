@@ -27,6 +27,9 @@ initBoxDialog = () ->
       width: $(window).width() - 200,
       height: $(window).height() - 200})
 
+# you define <a href="urlwithcontents" class="target-link" data-group="groupname">link</a>
+# and <div class="target-destination" data-group="groupname"></div>
+# The result is that a click will fetch the url contents and place them in the target-destination.
 initTargetLink = () ->
     $(".target-link").die()
     $(".target-link").live("click", (event) ->
