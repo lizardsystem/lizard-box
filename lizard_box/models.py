@@ -172,6 +172,9 @@ class ColumnBox(models.Model):
     action_boxes = models.ManyToManyField(
         "Box", related_name="action_boxes", null=True, blank=True)
     maximize_action = models.BooleanField(default=False)
+    refresh_millis = models.IntegerField(
+        default=0,
+        help_text="refresh this columnbox every xxx millis, 0 for no refreshment")
 
     class Meta:
         ordering = ('index', )

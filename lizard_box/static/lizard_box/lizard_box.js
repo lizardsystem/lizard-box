@@ -1,5 +1,5 @@
 (function() {
-  var divideVerticalSpaceEqually, initBoxDialog, initTargetLink;
+  var columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initTargetLink;
 
   divideVerticalSpaceEqually = function() {
     " For .evenly-spaced-vertical, divide the vertical space evenly between\nthe .vertical-item elements.  Take note of the 4px border between\nthem. Inspired by lizard-ui.\nHandy for forms underneath the graphs, boxes, ....";    return $(".evenly-spaced-vertical").each(function(index, element) {
@@ -38,6 +38,29 @@
         return console.log("Loaded " + source_group);
       });
       return false;
+    });
+  };
+
+  columnBoxRefresh = function(temp_id) {
+    var f;
+    f = function() {
+      return $('.box[data-temp-id="' + temp_id + '"]').load('./ .box[data-temp-id="' + temp_id + '"]"', function() {
+        return console.log("ColumnBox refreshed: " + temp_id);
+      });
+    };
+    return f;
+  };
+
+  initColumnBoxRefresh = function() {
+    console.log("Columnbox refresh");
+    return $(".box").each(function() {
+      var refresh_millis, temp_id;
+      refresh_millis = $(this).attr("data-refresh-millis");
+      temp_id = $(this).attr("data-temp-id");
+      if (refresh_millis > 0) {
+        console.log('set interval on ' + temp_id + ' millis: ' + refresh_millis);
+        return setInterval(columnBoxRefresh(temp_id), refresh_millis);
+      }
     });
   };
 

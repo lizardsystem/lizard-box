@@ -42,6 +42,26 @@ initTargetLink = () ->
         return false
     )
 
+
+columnBoxRefresh = (temp_id) ->
+    f = () ->
+        $('.box[data-temp-id="' + temp_id + '"]').load('./ .box[data-temp-id="' + temp_id + '"]"', () ->
+            console.log("ColumnBox refreshed: " + temp_id)
+        )
+    return f
+
+
+initColumnBoxRefresh = () ->
+    console.log("Columnbox refresh")
+    $(".box").each(() ->
+        refresh_millis = $(this).attr("data-refresh-millis")
+        temp_id = $(this).attr("data-temp-id")  # should give unique columnbox id
+        if refresh_millis > 0
+            console.log('set interval on ' + temp_id + ' millis: ' + refresh_millis)
+            setInterval(columnBoxRefresh(temp_id), refresh_millis)
+    )
+
+
 $ ->
     # give the evenly-spaced-vertical container its full height
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height())
@@ -84,6 +104,9 @@ $ ->
       )
     )
 
+    # Some boxes are configured to refresh itself.
+    # Experimental: popups appear multiple times, box contents are placed on a div too deep
+    # initColumnBoxRefresh()
 
 
 $(window).resize( () ->
