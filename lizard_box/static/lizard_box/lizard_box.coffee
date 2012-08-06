@@ -62,6 +62,31 @@ initColumnBoxRefresh = () ->
     )
 
 
+# Levee specific
+#
+#
+initLevee = () ->
+  $("#filter-measurements input").die()
+  $("#filter-measurements input").live("change", () ->
+    form = $(this).parents("form")
+    url = form.attr("action")
+    data = {}
+    form.find("input").each((index, element) ->
+      name = $(element).attr("name")
+      checked = $(element).is(":checked")
+      data[name] = checked
+      # Strange: if you remove the console.log, the input objects do not all appear in the output
+      console.log(name, checked)
+    )
+    #console.log(data)
+    $.post(url, data, () ->
+      console.log("update")
+    )
+  )
+#
+# End levee specific
+
+
 $ ->
     # give the evenly-spaced-vertical container its full height
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height())
@@ -82,6 +107,7 @@ $ ->
       initBoxDialog()
       $(".accordion").accordion()
       initTargetLink()
+      initLevee()
     )
 
     # Find the item by slug, because the dialog itself has moved/vanished.
@@ -107,6 +133,7 @@ $ ->
     # Some boxes are configured to refresh itself.
     # Experimental: popups appear multiple times, box contents are placed on a div too deep
     # initColumnBoxRefresh()
+    initLevee()
 
 
 $(window).resize( () ->

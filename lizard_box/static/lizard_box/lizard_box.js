@@ -1,5 +1,5 @@
 (function() {
-  var columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initTargetLink;
+  var columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initLevee, initTargetLink;
 
   divideVerticalSpaceEqually = function() {
     " For .evenly-spaced-vertical, divide the vertical space evenly between\nthe .vertical-item elements.  Take note of the 4px border between\nthem. Inspired by lizard-ui.\nHandy for forms underneath the graphs, boxes, ....";    return $(".evenly-spaced-vertical").each(function(index, element) {
@@ -64,6 +64,26 @@
     });
   };
 
+  initLevee = function() {
+    $("#filter-measurements input").die();
+    return $("#filter-measurements input").live("change", function() {
+      var data, form, url;
+      form = $(this).parents("form");
+      url = form.attr("action");
+      data = {};
+      form.find("input").each(function(index, element) {
+        var checked, name;
+        name = $(element).attr("name");
+        checked = $(element).is(":checked");
+        data[name] = checked;
+        return console.log(name, checked);
+      });
+      return $.post(url, data, function() {
+        return console.log("update");
+      });
+    });
+  };
+
   $(function() {
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height());
     $(".vertical-item-fixed").each(function(index, elem) {
@@ -73,7 +93,8 @@
       console.log("DOM modified event");
       initBoxDialog();
       $(".accordion").accordion();
-      return initTargetLink();
+      initTargetLink();
+      return initLevee();
     });
     $(".box-action").live("click", function(event) {
       var temp_id;
@@ -83,13 +104,14 @@
       return false;
     });
     divideVerticalSpaceEqually();
-    return $(".javascript-replace").each(function(index, element) {
+    $(".javascript-replace").each(function(index, element) {
       var url;
       url = $(this).attr("data-src");
       return $(this).load(url, function() {
         return console.log("loaded url " + url);
       });
     });
+    return initLevee();
   });
 
   $(window).resize(function() {
