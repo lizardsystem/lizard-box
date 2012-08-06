@@ -79,7 +79,11 @@
         return console.log(name, checked);
       });
       return $.post(url, data, function() {
-        return console.log("update");
+        var $target;
+        console.log("update");
+        $target = $("[data-slug='profiel'] .javascript-replace");
+        url = $target.attr("data-src");
+        return $target.load(url);
       });
     });
   };

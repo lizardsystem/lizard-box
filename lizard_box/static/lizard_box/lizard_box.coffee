@@ -81,6 +81,11 @@ initLevee = () ->
     #console.log(data)
     $.post(url, data, () ->
       console.log("update")
+      # We know that data-slug "profiel" has js-loaded contents in <div class="javascript-replace">, reload it.
+      $target = $("[data-slug='profiel'] .javascript-replace")
+      url = $target.attr("data-src")
+      #console.log(url)
+      $target.load(url)
     )
   )
 #
