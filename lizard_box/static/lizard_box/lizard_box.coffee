@@ -36,6 +36,8 @@ initTargetLink = () ->
         event.preventDefault()
         source_url = $(this).attr('href')
         source_group = $(this).attr('data-group')
+        # place the link in it for future reference
+        $('.target-destination[data-group="' + source_group + '"]').attr('data-src', source_url);
         $('.target-destination[data-group="' + source_group + '"]').load(source_url, () ->
              console.log("Loaded " + source_group)
         )
@@ -82,7 +84,7 @@ initLevee = () ->
     $.post(url, data, () ->
       console.log("update")
       # We know that data-slug "profiel" has js-loaded contents in <div class="javascript-replace">, reload it.
-      $target = $("[data-slug='profiel'] .javascript-replace")
+      $target = $(".target-destination[data-group='profile']")
       url = $target.attr("data-src")
       #console.log(url)
       $target.load(url)

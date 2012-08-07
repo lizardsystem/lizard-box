@@ -34,6 +34,7 @@
       event.preventDefault();
       source_url = $(this).attr('href');
       source_group = $(this).attr('data-group');
+      $('.target-destination[data-group="' + source_group + '"]').attr('data-src', source_url);
       $('.target-destination[data-group="' + source_group + '"]').load(source_url, function() {
         return console.log("Loaded " + source_group);
       });
@@ -81,7 +82,7 @@
       return $.post(url, data, function() {
         var $target;
         console.log("update");
-        $target = $("[data-slug='profiel'] .javascript-replace");
+        $target = $(".target-destination[data-group='profile']");
         url = $target.attr("data-src");
         return $target.load(url);
       });
