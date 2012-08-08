@@ -1,5 +1,5 @@
 (function() {
-  var columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initLevee, initTargetLink;
+  var columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initLevee, initSelectAllNone, initTargetLink, postFilterMeasurements;
 
   divideVerticalSpaceEqually = function() {
     " For .evenly-spaced-vertical, divide the vertical space evenly between\nthe .vertical-item elements.  Take note of the 4px border between\nthem. Inspired by lizard-ui.\nHandy for forms underneath the graphs, boxes, ....";    return $(".evenly-spaced-vertical").each(function(index, element) {
@@ -18,12 +18,21 @@
   };
 
   initBoxDialog = function() {
-    return $(".box-dialog").dialog({
-      autoOpen: false,
-      title: $(this).attr("data-title"),
-      minHeight: 400,
-      width: $(window).width() - 200,
-      height: $(window).height() - 200
+    return $(".box-dialog").each(function(index, element) {
+      var data_attr_init;
+      data_attr_init = "map_link_initialized_" + $(this).attr("data-temp-id");
+      if ($("body").data(data_attr_init)) {
+        if (!$(this).hasClass("ui-dialog-content")) $(this).remove();
+        return;
+      }
+      $(this).dialog({
+        autoOpen: false,
+        title: $(this).attr("data-title"),
+        minHeight: 400,
+        width: $(window).width() - 200,
+        height: $(window).height() - 200
+      });
+      return $("body").data(data_attr_init, true);
     });
   };
 
@@ -65,9 +74,47 @@
     });
   };
 
+  postFilterMeasurements = function() {
+    var data, form, url;
+    form = $("#filter-measurements");
+    url = form.attr("action");
+    data = {};
+    form.find("input").each(function(index, element) {
+      var checked, name;
+      name = $(element).attr("name");
+      checked = $(element).is(":checked");
+      data[name] = checked;
+      return console.log(name, checked);
+    });
+    return $.post(url, data, function() {
+      var $target;
+      console.log("update");
+      $target = $(".target-destination[data-group='profile']");
+      url = $target.attr("data-src");
+      return $target.load(url);
+    });
+  };
+
+  initSelectAllNone = function() {
+    $("a.select-all").live("click", function(event) {
+      event.preventDefault();
+      $(this).parents("form").find('input[type="checkbox"]').attr("checked", true);
+      postFilterMeasurements();
+      return false;
+    });
+    return $("a.select-none").live("click", function(event) {
+      event.preventDefault();
+      $(this).parents("form").find('input[type="checkbox"]').attr("checked", false);
+      postFilterMeasurements();
+      return false;
+    });
+  };
+
   initLevee = function() {
     $("#filter-measurements input").die();
-    return $("#filter-measurements input").live("change", function() {
+    $("#filter-measurements input").live("change", postFilterMeasurements);
+    $("#filter-tags input").die();
+    return $("#filter-tags input").live("change", function() {
       var data, form, url;
       form = $(this).parents("form");
       url = form.attr("action");
@@ -79,13 +126,7 @@
         data[name] = checked;
         return console.log(name, checked);
       });
-      return $.post(url, data, function() {
-        var $target;
-        console.log("update");
-        $target = $(".target-destination[data-group='profile']");
-        url = $target.attr("data-src");
-        return $target.load(url);
-      });
+      return $.post(url, data);
     });
   };
 
@@ -116,7 +157,8 @@
         return console.log("loaded url " + url);
       });
     });
-    return initLevee();
+    initLevee();
+    return initSelectAllNone();
   });
 
   $(window).resize(function() {

@@ -20,12 +20,24 @@ divideVerticalSpaceEqually = () ->
         $(element).find('.vertical-item.box-contents iframe').height(verticalItemHeight - 40)  # let outer scrollbar disappear
 
 initBoxDialog = () ->
-    $(".box-dialog").dialog({
-      autoOpen: false,
-      title: $(this).attr("data-title"),
-      minHeight: 400,
-      width: $(window).width() - 200,
-      height: $(window).height() - 200})
+    $(".box-dialog").each((index, element) ->
+      # Special measurements because the page can be dynamic. New
+      # instances can appear for each data-temp-id, but we want to
+      # ignore those. Note that more and more of the same box-dialog
+      # objects appear during a session.
+      data_attr_init = "map_link_initialized_" + $(this).attr("data-temp-id")
+      if $("body").data(data_attr_init)  # the popup exists
+        if not $(this).hasClass("ui-dialog-content")  # and the popup is not this object
+          $(this).remove()
+        return
+      $(this).dialog({
+        autoOpen: false,
+        title: $(this).attr("data-title"),
+        minHeight: 400,
+        width: $(window).width() - 200,
+        height: $(window).height() - 200})
+      $("body").data(data_attr_init, true)
+    )
 
 # you define <a href="urlwithcontents" class="target-link" data-group="groupname">link</a>
 # and <div class="target-destination" data-group="groupname"></div>
@@ -67,10 +79,8 @@ initColumnBoxRefresh = () ->
 # Levee specific
 #
 #
-initLevee = () ->
-  $("#filter-measurements input").die()
-  $("#filter-measurements input").live("change", () ->
-    form = $(this).parents("form")
+postFilterMeasurements = () ->
+    form = $("#filter-measurements")
     url = form.attr("action")
     data = {}
     form.find("input").each((index, element) ->
@@ -89,6 +99,38 @@ initLevee = () ->
       #console.log(url)
       $target.load(url)
     )
+
+initSelectAllNone = () ->
+  $("a.select-all").live("click", (event) ->
+    event.preventDefault()
+    $(this).parents("form").find('input[type="checkbox"]').attr("checked", true)
+    postFilterMeasurements()
+    return false
+  )
+  $("a.select-none").live("click", (event) ->
+    event.preventDefault()
+    $(this).parents("form").find('input[type="checkbox"]').attr("checked", false)
+    postFilterMeasurements()
+    return false
+  )
+
+initLevee = () ->
+  $("#filter-measurements input").die()
+  $("#filter-measurements input").live("change", postFilterMeasurements)
+  $("#filter-tags input").die()
+  $("#filter-tags input").live("change", () ->
+    form = $(this).parents("form")
+    url = form.attr("action")
+    data = {}
+    form.find("input").each((index, element) ->
+      name = $(element).attr("name")
+      checked = $(element).is(":checked")
+      data[name] = checked
+      # Strange: if you remove the console.log, the input objects do not all appear in the output
+      console.log(name, checked)
+    )
+    #console.log(data)
+    $.post(url, data)
   )
 #
 # End levee specific
@@ -141,6 +183,9 @@ $ ->
     # Experimental: popups appear multiple times, box contents are placed on a div too deep
     # initColumnBoxRefresh()
     initLevee()
+
+    # "select-all" and "select-none"
+    initSelectAllNone()
 
 
 $(window).resize( () ->
