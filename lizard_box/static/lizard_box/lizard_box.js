@@ -1,5 +1,5 @@
 (function() {
-  var after_dom_update_busy, columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initLevee, initSelectAllNone, initTargetLink, javascriptReplace, postFilterMeasurements;
+  var columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initLevee, initSelectAllNone, initTargetLink, javascriptReplace, postFilterMeasurements;
 
   divideVerticalSpaceEqually = function() {
     " For .evenly-spaced-vertical, divide the vertical space evenly between\nthe .vertical-item elements.  Take note of the 4px border between\nthem. Inspired by lizard-ui.\nHandy for forms underneath the graphs, boxes, ....";    return $(".evenly-spaced-vertical").each(function(index, element) {
@@ -154,25 +154,17 @@
     });
   };
 
-  after_dom_update_busy = false;
-
   $(function() {
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height());
     $(".vertical-item-fixed").each(function(index, elem) {
       return $(elem).height($(elem).attr('data-height'));
     });
     $("#main-container").on("DOMNodeInserted", function(event) {
-      if (!after_dom_update_busy) {
-        after_dom_update_busy = true;
-        return setInterval(function() {
-          console.log("DOM modified event");
-          initBoxDialog();
-          $(".accordion").accordion();
-          initTargetLink();
-          initLevee();
-          return after_dom_update_busy = false;
-        }, 500);
-      }
+      console.log("DOM modified event");
+      initBoxDialog();
+      $(".accordion").accordion();
+      initTargetLink();
+      return initLevee();
     });
     $(".box-action").live("click", function(event) {
       var temp_id;

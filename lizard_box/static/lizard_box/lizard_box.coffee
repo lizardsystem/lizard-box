@@ -158,7 +158,7 @@ initLevee = () ->
 # End levee specific
 
 
-after_dom_update_busy = false
+# after_dom_update_busy = false
 
 $ ->
     # give the evenly-spaced-vertical container its full height
@@ -175,9 +175,9 @@ $ ->
 
     #  DOMNodeInserted, DOMSubtreeModified: only after 500 ms
     $("#main-container").on("DOMNodeInserted", (event) ->
-      if not after_dom_update_busy
-        after_dom_update_busy = true
-        setInterval(() ->
+      # if not after_dom_update_busy
+      #   after_dom_update_busy = true
+      #   setInterval(() ->
           # every time the DOM changes, check for new boxes
           console.log("DOM modified event")
           initBoxDialog()
@@ -185,8 +185,8 @@ $ ->
           initTargetLink()
           initLevee()
           #reloadGraphs()  # from lizardui
-          after_dom_update_busy = false
-        , 500)
+        #   after_dom_update_busy = false
+        # , 500)
     )
 
     # Find the item by slug, because the dialog itself has moved/vanished.
