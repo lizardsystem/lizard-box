@@ -96,20 +96,19 @@ postFilterMeasurements = () ->
       # We know that data-slug "profiel" has js-loaded contents in <div class="javascript-replace">, reload it.
       $target = $(".target-destination[data-group='profile']")
       url = $target.attr("data-src")
-      #console.log(url)
       $target.load(url)
     )
 
 initSelectAllNone = () ->
   $("a.select-all").live("click", (event) ->
     event.preventDefault()
-    $(this).parents("form").find('input[type="checkbox"]').attr("checked", true)
+    $(this).parents("ul").find('input[type="checkbox"]').attr("checked", true)
     postFilterMeasurements()
     return false
   )
   $("a.select-none").live("click", (event) ->
     event.preventDefault()
-    $(this).parents("form").find('input[type="checkbox"]').attr("checked", false)
+    $(this).parents("ul").find('input[type="checkbox"]').attr("checked", false)
     postFilterMeasurements()
     return false
   )
@@ -163,7 +162,13 @@ $ ->
     $(".box-action").live("click", (event) ->
         event.preventDefault()
         temp_id = $(this).attr("data-temp-id")
-        # console.log(temp_id)
+        # reload iframe after clicking a box-action.
+        $("div.box-dialog[data-temp-id=\""+temp_id+"\"] iframe").each((index, element) ->
+          # Should be only one
+          src = $(element).attr("src")
+          $(element).attr("src", src)
+        )
+        # open target
         $("div.box-dialog[data-temp-id=\""+temp_id+"\"]").dialog('open')
         return false;
     )

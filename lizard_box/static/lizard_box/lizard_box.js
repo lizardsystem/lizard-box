@@ -98,13 +98,13 @@
   initSelectAllNone = function() {
     $("a.select-all").live("click", function(event) {
       event.preventDefault();
-      $(this).parents("form").find('input[type="checkbox"]').attr("checked", true);
+      $(this).parents("ul").find('input[type="checkbox"]').attr("checked", true);
       postFilterMeasurements();
       return false;
     });
     return $("a.select-none").live("click", function(event) {
       event.preventDefault();
-      $(this).parents("form").find('input[type="checkbox"]').attr("checked", false);
+      $(this).parents("ul").find('input[type="checkbox"]').attr("checked", false);
       postFilterMeasurements();
       return false;
     });
@@ -146,6 +146,11 @@
       var temp_id;
       event.preventDefault();
       temp_id = $(this).attr("data-temp-id");
+      $("div.box-dialog[data-temp-id=\"" + temp_id + "\"] iframe").each(function(index, element) {
+        var src;
+        src = $(element).attr("src");
+        return $(element).attr("src", src);
+      });
       $("div.box-dialog[data-temp-id=\"" + temp_id + "\"]").dialog('open');
       return false;
     });
