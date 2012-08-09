@@ -1,5 +1,5 @@
 (function() {
-  var columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initLevee, initSelectAllNone, initTargetLink, postFilterMeasurements;
+  var after_dom_update_busy, columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initLevee, initSelectAllNone, initTargetLink, javascriptReplace, postFilterMeasurements;
 
   divideVerticalSpaceEqually = function() {
     " For .evenly-spaced-vertical, divide the vertical space evenly between\nthe .vertical-item elements.  Take note of the 4px border between\nthem. Inspired by lizard-ui.\nHandy for forms underneath the graphs, boxes, ....";    return $(".evenly-spaced-vertical").each(function(index, element) {
@@ -54,8 +54,12 @@
   columnBoxRefresh = function(temp_id) {
     var f;
     f = function() {
-      return $('.box[data-temp-id="' + temp_id + '"]').load('./ .box[data-temp-id="' + temp_id + '"]"', function() {
-        return console.log("ColumnBox refreshed: " + temp_id);
+      return $.get('./', function(data) {
+        var new_contents;
+        console.log("ColumnBox refreshed: " + temp_id);
+        new_contents = $(data).find('.box[data-temp-id="' + temp_id + '"]"').html();
+        $('.box[data-temp-id="' + temp_id + '"]').html(new_contents);
+        return javascriptReplace($('.box[data-temp-id="' + temp_id + '"]'));
       });
     };
     return f;
@@ -72,6 +76,26 @@
         return setInterval(columnBoxRefresh(temp_id), refresh_millis);
       }
     });
+  };
+
+  javascriptReplace = function($selector) {
+    if ($selector !== void 0) {
+      return $selector.find(".javascript-replace").each(function(index, element) {
+        var url;
+        url = $(this).attr("data-src");
+        return $(this).load(url, function() {
+          return console.log("loaded url " + url);
+        });
+      });
+    } else {
+      return $(".javascript-replace").each(function(index, element) {
+        var url;
+        url = $(this).attr("data-src");
+        return $(this).load(url, function() {
+          return console.log("loaded url " + url);
+        });
+      });
+    }
   };
 
   postFilterMeasurements = function() {
@@ -130,17 +154,25 @@
     });
   };
 
+  after_dom_update_busy = false;
+
   $(function() {
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height());
     $(".vertical-item-fixed").each(function(index, elem) {
       return $(elem).height($(elem).attr('data-height'));
     });
     $("#main-container").on("DOMNodeInserted", function(event) {
-      console.log("DOM modified event");
-      initBoxDialog();
-      $(".accordion").accordion();
-      initTargetLink();
-      return initLevee();
+      if (!after_dom_update_busy) {
+        after_dom_update_busy = true;
+        return setInterval(function() {
+          console.log("DOM modified event");
+          initBoxDialog();
+          $(".accordion").accordion();
+          initTargetLink();
+          initLevee();
+          return after_dom_update_busy = false;
+        }, 500);
+      }
     });
     $(".box-action").live("click", function(event) {
       var temp_id;
@@ -155,13 +187,9 @@
       return false;
     });
     divideVerticalSpaceEqually();
-    $(".javascript-replace").each(function(index, element) {
-      var url;
-      url = $(this).attr("data-src");
-      return $(this).load(url, function() {
-        return console.log("loaded url " + url);
-      });
-    });
+    javascriptReplace();
+    initColumnBoxRefresh();
+    reloadGraphs();
     initLevee();
     return initSelectAllNone();
   });

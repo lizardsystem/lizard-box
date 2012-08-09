@@ -138,6 +138,9 @@ class Box(models.Model):
         help_text=_("For box_type 'iframe', url for iframe or source url for js loader")
         )
 
+    class Meta:
+        ordering = ('name', )
+
     def __unicode__(self):
         return self.name
 

@@ -59,8 +59,15 @@ initTargetLink = () ->
 
 columnBoxRefresh = (temp_id) ->
     f = () ->
-        $('.box[data-temp-id="' + temp_id + '"]').load('./ .box[data-temp-id="' + temp_id + '"]"', () ->
+        # refresh single element
+        # $('.box[data-temp-id="' + temp_id + '"]').load('./ .box[data-temp-id="' + temp_id + '"]"', () ->
+        #     console.log("ColumnBox refreshed: " + temp_id)
+        # )
+        $.get('./', (data) ->
             console.log("ColumnBox refreshed: " + temp_id)
+            new_contents = $(data).find('.box[data-temp-id="' + temp_id + '"]"').html()
+            $('.box[data-temp-id="' + temp_id + '"]').html(new_contents)
+            javascriptReplace($('.box[data-temp-id="' + temp_id + '"]'))
         )
     return f
 
@@ -74,6 +81,22 @@ initColumnBoxRefresh = () ->
             console.log('set interval on ' + temp_id + ' millis: ' + refresh_millis)
             setInterval(columnBoxRefresh(temp_id), refresh_millis)
     )
+
+javascriptReplace = ($selector) ->
+    if $selector != undefined
+      $selector.find(".javascript-replace").each((index, element) ->
+        url = $(this).attr("data-src")
+        $(this).load(url, () ->
+          console.log("loaded url " + url)
+        )
+      )
+    else
+      $(".javascript-replace").each((index, element) ->
+        url = $(this).attr("data-src")
+        $(this).load(url, () ->
+          console.log("loaded url " + url)
+        )
+      )
 
 
 # Levee specific
@@ -135,6 +158,8 @@ initLevee = () ->
 # End levee specific
 
 
+after_dom_update_busy = false
+
 $ ->
     # give the evenly-spaced-vertical container its full height
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height())
@@ -148,14 +173,20 @@ $ ->
     #     $(this).dialog({title: $(this).attr("data-title")})
     #     )
 
-    #  DOMNodeInserted, DOMSubtreeModified
+    #  DOMNodeInserted, DOMSubtreeModified: only after 500 ms
     $("#main-container").on("DOMNodeInserted", (event) ->
-      # every time the DOM changes, check for new boxes
-      console.log("DOM modified event")
-      initBoxDialog()
-      $(".accordion").accordion()
-      initTargetLink()
-      initLevee()
+      if not after_dom_update_busy
+        after_dom_update_busy = true
+        setInterval(() ->
+          # every time the DOM changes, check for new boxes
+          console.log("DOM modified event")
+          initBoxDialog()
+          $(".accordion").accordion()
+          initTargetLink()
+          initLevee()
+          #reloadGraphs()  # from lizardui
+          after_dom_update_busy = false
+        , 500)
     )
 
     # Find the item by slug, because the dialog itself has moved/vanished.
@@ -177,16 +208,13 @@ $ ->
     divideVerticalSpaceEqually()
 
     # load the javascript loader based boxes
-    $(".javascript-replace").each((index, element) ->
-      url = $(this).attr("data-src")
-      $(this).load(url, () ->
-        console.log("loaded url " + url)
-      )
-    )
+    javascriptReplace()
 
     # Some boxes are configured to refresh itself.
     # Experimental: popups appear multiple times, box contents are placed on a div too deep
-    # initColumnBoxRefresh()
+    initColumnBoxRefresh()
+    reloadGraphs()  # from lizardui
+
     initLevee()
 
     # "select-all" and "select-none"
