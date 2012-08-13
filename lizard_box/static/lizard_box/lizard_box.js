@@ -29,8 +29,8 @@
         autoOpen: false,
         title: $(this).attr("data-title"),
         minHeight: 400,
-        width: $(window).width() - 200,
-        height: $(window).height() - 200
+        width: 960,
+        height: 500
       });
       return $("body").data(data_attr_init, true);
     });

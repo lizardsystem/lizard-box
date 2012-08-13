@@ -34,8 +34,8 @@ initBoxDialog = () ->
         autoOpen: false,
         title: $(this).attr("data-title"),
         minHeight: 400,
-        width: $(window).width() - 200,
-        height: $(window).height() - 200})
+        width: 960,
+        height: 500})
       $("body").data(data_attr_init, true)
     )
 
@@ -139,6 +139,10 @@ initSelectAllNone = () ->
 initLevee = () ->
   $("#filter-measurements input").die()
   $("#filter-measurements input").live("change", postFilterMeasurements)
+  # $("#filter-tags a").live("click", (event) ->
+  #   event.preventDefault()
+  #   return false
+  #   )
   $("#filter-tags input").die()
   $("#filter-tags input").live("change", () ->
     form = $(this).parents("form")
