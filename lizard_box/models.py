@@ -182,6 +182,13 @@ class ColumnBox(models.Model):
         default=0,
         help_text="refresh this columnbox every xxx millis, 0 for no refreshment")
 
+    html_color_header = models.CharField(
+        max_length=20, null=True, blank=True,
+        help_text="optionally provide html header color")
+    html_color_body = models.CharField(
+        max_length=20, null=True, blank=True,
+        help_text="optionally provide html body color")
+
     class Meta:
         ordering = ('index', )
 
