@@ -144,20 +144,34 @@ class Box(models.Model):
     def __unicode__(self):
         return self.name
 
-    def render(self):
+    def render(self, url=None):
+        if url is None:
+            url = self.url
         if self.box_type == self.BOX_TYPE_TEMPLATE:
             if self.template:
                 return self.template
             else:
                 return 'Empty box: fill template of box named "%s"' % self.name
         elif self.box_type == self.BOX_TYPE_IFRAME:
-            return '<iframe src="%s" frameborder="0" class="box">IFrame contents</iframe>' % self.url
+            return '<iframe src="%s" frameborder="0" class="box">IFrame contents</iframe>' % url
         elif self.box_type == self.BOX_TYPE_JSLOAD:
-            data_src = self.url
-            if self.template:
-                data_src += ' ' + self.template
+            # data_src = self.url
+            # if self.template:
+            #     data_src += ' ' + self.template
             return '<div class="javascript-replace" data-src="%s">Loading</div>' % (
-                data_src)
+                url)
+
+    def render_popup(self):
+        """The popup rendering adds the option "popup=true" to the src url"""
+        url = self.url + '?popup=true'
+        return self.render(url=url)
+
+    @property
+    def icon_class_or_default(self):
+        if self.icon_class:
+            return self.icon_class
+        else:
+            return 'icon-plus-sign'
 
 
 class ColumnBox(models.Model):

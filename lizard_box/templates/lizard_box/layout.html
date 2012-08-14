@@ -115,7 +115,7 @@ You can use vertical-item-fixed like this:
       <div class="box {% if columnbox.height %}vertical-item-fixed{% else %}vertical-item{% endif %}" data-refresh-millis="{{ columnbox.refresh_millis}}" data-slug="{{ columnbox.box.slug }}" data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}"{% if columnbox.height %} data-height="{{ columnbox.height }}"{% endif %}{% if columnbox.html_color_body %} style="background-color: {{ columnbox.html_color_body }};"{% endif %}>
         <div class="box-header"{% if columnbox.html_color_header %} style="background-color: {{ columnbox.html_color_header}}; background-image: -webkit-linear-gradient(left, {{ columnbox.html_color_header }}, {{ columnbox.html_color_header }}); border-bottom: 1px solid {{ columnbox.html_color_header }};"{% endif %}>
           {{ columnbox.display_name }}
-          {% for action in columnbox.actions %}<a href="#" class="box-action {{ action.icon_class }} action-icon icon-white" data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}"><div class="box-dialog" data-title="{{ action }}" data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}">{% autoescape off %}{{ action.render }}{% endautoescape %}</div></a>{% endfor %}
+          {% for action in columnbox.actions %}<a href="#" class="box-action {{ action.icon_class_or_default }} action-icon icon-white" data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}"><div class="box-dialog" data-title="{{ action }}" data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}">{% autoescape off %}{{ action.render_popup }}{% endautoescape %}</div></a>{% endfor %}
         </div>
         <div class="box-contents">
           {% autoescape off %}

@@ -18,6 +18,7 @@
   };
 
   initBoxDialog = function() {
+    $(".box-dialog").die();
     return $(".box-dialog").each(function(index, element) {
       var data_attr_init;
       data_attr_init = "map_link_initialized_" + $(this).attr("data-temp-id");
@@ -28,7 +29,7 @@
       $(this).dialog({
         autoOpen: false,
         title: $(this).attr("data-title"),
-        minHeight: 400,
+        minHeight: 300,
         width: 960,
         height: 500
       });

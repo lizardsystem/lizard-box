@@ -20,6 +20,7 @@ divideVerticalSpaceEqually = () ->
         $(element).find('.vertical-item.box-contents iframe').height(verticalItemHeight - 40)  # let outer scrollbar disappear
 
 initBoxDialog = () ->
+    $(".box-dialog").die()
     $(".box-dialog").each((index, element) ->
       # Special measurements because the page can be dynamic. New
       # instances can appear for each data-temp-id, but we want to
@@ -33,9 +34,13 @@ initBoxDialog = () ->
       $(this).dialog({
         autoOpen: false,
         title: $(this).attr("data-title"),
-        minHeight: 400,
+        minHeight: 300,
         width: 960,
-        height: 500})
+        height: 500
+      })
+      # Levee
+      # position: "bottom" and height: 400 does not have the desired
+      # effect on iPad: that you can still see "Aanzicht"
       $("body").data(data_attr_init, true)
     )
 
