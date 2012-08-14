@@ -138,7 +138,7 @@
     $("#filter-measurements input").die();
     $("#filter-measurements input").live("change", postFilterMeasurements);
     $("#filter-tags input").die();
-    return $("#filter-tags input").live("change", function() {
+    $("#filter-tags input").live("change", function() {
       var data, form, url;
       form = $(this).parents("form");
       url = form.attr("action");
@@ -151,6 +151,35 @@
         return console.log(name, checked);
       });
       return $.post(url, data);
+    });
+    $("a.select-point-set").die();
+    $("a.select-point-set").live("click", function() {
+      var data, form, url;
+      form = $(this).parents("form");
+      url = form.attr("action");
+      data = {
+        point_set: $(this).attr("data-point-set-id")
+      };
+      $(this).addClass("point-set-selected");
+      return $.post(url, data, function(data) {
+        $("#point-set-selection").html($(data).find("#point-set-selection").html());
+        $("#point-set-graph-selection").html($(data).find("#point-set-graph-selection").html());
+        return $("#point-set-graphs").html($(data).find("#point-set-graphs").html());
+      });
+    });
+    $("input.select-point").die();
+    return $("input.select-point").live("change", function() {
+      var data, form, url;
+      form = $(this).parents("form");
+      url = form.attr("action");
+      data = {
+        point_from_point_set: $(this).attr("data-point-set-id"),
+        point: $(this).attr("data-point-id"),
+        point_checked: $(this).is(":checked")
+      };
+      return $.post(url, data, function(data) {
+        return $("#point-set-graphs").html($(data).find("#point-set-graphs").html());
+      });
     });
   };
 

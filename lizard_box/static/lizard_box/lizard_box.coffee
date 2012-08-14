@@ -155,8 +155,38 @@ initLevee = () ->
       # Strange: if you remove the console.log, the input objects do not all appear in the output
       console.log(name, checked)
     )
-    #console.log(data)
     $.post(url, data)
+  )
+
+  # Graphs
+  $("a.select-point-set").die()
+  $("a.select-point-set").live("click", () ->
+    form = $(this).parents("form")
+    url = form.attr("action")
+    data = {point_set: $(this).attr("data-point-set-id")}
+
+    $(this).addClass("point-set-selected")  # make it feel snappier
+
+    $.post(url, data, (data) ->
+      $("#point-set-selection").html($(data).find("#point-set-selection").html())
+      $("#point-set-graph-selection").html($(data).find("#point-set-graph-selection").html())
+      $("#point-set-graphs").html($(data).find("#point-set-graphs").html())
+    )
+  )
+
+  $("input.select-point").die()
+  $("input.select-point").live("change", () ->
+    form = $(this).parents("form")
+    url = form.attr("action")
+    data = {
+      point_from_point_set: $(this).attr("data-point-set-id"),
+      point: $(this).attr("data-point-id"),
+      point_checked: $(this).is(":checked")
+    }
+
+    $.post(url, data, (data) ->
+      $("#point-set-graphs").html($(data).find("#point-set-graphs").html())
+    )
   )
 #
 # End levee specific
