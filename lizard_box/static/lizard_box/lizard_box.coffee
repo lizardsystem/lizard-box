@@ -160,7 +160,9 @@ initLevee = () ->
       # Strange: if you remove the console.log, the input objects do not all appear in the output
       console.log(name, checked)
     )
-    $.post(url, data)
+    $.post(url, data, (data) ->
+      $("#message-box-messages").html($(data).find("#message-box-messages"))
+    )
   )
 
   # Graphs
@@ -193,6 +195,7 @@ initLevee = () ->
       $("#point-set-graphs").html($(data).find("#point-set-graphs").html())
     )
   )
+
 #
 # End levee specific
 

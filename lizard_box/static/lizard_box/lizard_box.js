@@ -151,7 +151,9 @@
         data[name] = checked;
         return console.log(name, checked);
       });
-      return $.post(url, data);
+      return $.post(url, data, function(data) {
+        return $("#message-box-messages").html($(data).find("#message-box-messages"));
+      });
     });
     $("a.select-point-set").die();
     $("a.select-point-set").live("click", function() {
