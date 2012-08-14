@@ -151,7 +151,7 @@ class Box(models.Model):
             else:
                 return 'Empty box: fill template of box named "%s"' % self.name
         elif self.box_type == self.BOX_TYPE_IFRAME:
-            return '<iframe src="%s" frameborder="0">IFrame contents</iframe>' % self.url
+            return '<iframe src="%s" frameborder="0" class="box">IFrame contents</iframe>' % self.url
         elif self.box_type == self.BOX_TYPE_JSLOAD:
             data_src = self.url
             if self.template:
