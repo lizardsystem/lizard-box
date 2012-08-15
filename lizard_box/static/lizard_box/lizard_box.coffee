@@ -55,6 +55,8 @@ initTargetLink = () ->
         source_group = $(this).attr('data-group')
         # place the link in it for future reference
         $('.target-destination[data-group="' + source_group + '"]').attr('data-src', source_url);
+        # Place ajax loader in place
+        $('.target-destination[data-group="' + source_group + '"]').html('<div style="display: block; margin-left: auto; margin-right: auto; width: 40px;"><img src="/static_media/lizard_box/ajax-loader.gif"></div>')
         $('.target-destination[data-group="' + source_group + '"]').load(source_url, () ->
              console.log("Loaded " + source_group)
         )

@@ -45,6 +45,7 @@
       source_url = $(this).attr('href');
       source_group = $(this).attr('data-group');
       $('.target-destination[data-group="' + source_group + '"]').attr('data-src', source_url);
+      $('.target-destination[data-group="' + source_group + '"]').html('<div style="display: block; margin-left: auto; margin-right: auto; width: 40px;"><img src="/static_media/lizard_box/ajax-loader.gif"></div>');
       $('.target-destination[data-group="' + source_group + '"]').load(source_url, function() {
         return console.log("Loaded " + source_group);
       });
