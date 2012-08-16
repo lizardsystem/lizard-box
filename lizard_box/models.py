@@ -112,9 +112,9 @@ class Box(models.Model):
     BOX_TYPE_JSLOAD = 3
 
     BOX_TYPE_CHOICES = (
-        (1, "template in box"),
-        (2, "iframe"),
-        (3, "js load"),
+        (BOX_TYPE_TEMPLATE, "template in box"),
+        (BOX_TYPE_IFRAME, "iframe"),
+        (BOX_TYPE_JSLOAD, "js load"),
         )
 
     name = models.CharField(
