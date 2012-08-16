@@ -57,3 +57,16 @@ class BoxView(UiView):
     @property
     def box(self):
         return get_object_or_404(models.Box, slug=self.kwargs['slug'])
+
+    @property
+    def breadcrumbs(self):
+        """Return breadcrumbs (only if we're the homepage).
+
+        If we have the 'home' slug, we're used as the homepage,
+        apparently. Return specifically only the 'home' breadcrumb in that
+        case. Otherwise return None so that the fallback kicks in.
+
+        """
+        icon = self.best_matching_application_icon
+        if self.kwargs['slug'] == 'home':
+            return [self.home_breadcrumb_element]
