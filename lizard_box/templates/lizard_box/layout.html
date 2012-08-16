@@ -128,6 +128,12 @@ You can use vertical-item-fixed like this:
                    style="background-color: {{ columnbox.html_color_header}}; background-image: -webkit-linear-gradient(left, {{ columnbox.html_color_header }}, {{ columnbox.html_color_header }}); border-bottom: 1px solid {{ columnbox.html_color_header }};"
                  {% endif %}>
               {{ columnbox.display_name }}
+
+              {% if user.is_superuser %}
+                <a href="/admin/lizard_box/columnbox/{{ columnbox.pk }}/"
+                   class="icon-edit action-icon icon-white">&nbsp;</a>
+              {% endif %}
+
               {% for action in columnbox.actions %}
               <a href="#"
                  class="box-action {{ action.icon_class_or_default }} action-icon icon-white"
