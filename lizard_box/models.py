@@ -139,7 +139,7 @@ class Box(models.Model):
         )
 
     class Meta:
-        ordering = ('name', )
+        ordering = ('slug', )
 
     def __unicode__(self):
         return self.name
