@@ -44,7 +44,11 @@ class BoxView(UiView):
     """
 
     template_name = 'lizard_box/box.html'
-    #page_title = 'Box'  # apparently used for breadcrumbs
+
+    @property
+    def edit_link(self):
+        return '/admin/lizard_box/box/{pk}/'.format(
+            pk=self.box.pk)
 
     @property
     def page_title(self):
