@@ -112,11 +112,10 @@ You can use vertical-item-fixed like this:
     {% for column in view.layout.column_set.all %}
       <div class="span{{ column.width }} evenly-spaced-vertical">
         {% for columnbox in column.columnbox_set.all %}
-          <div class="box {% if columnbox.height %}vertical-item-fixed{% else
-                      %}vertical-item{% endif %}"
-               data-refresh-millis="{{ columnbox.refresh_millis}}"
+          <div class="box {% if columnbox.height %}vertical-item-fixed{% else %}vertical-item{% endif %}"
+               data-refresh-millis="{{ columnbox.refresh_millis }}"
                data-slug="{{ columnbox.box.slug }}"
-               data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}"
+               data-temp-id="{{ column.index }}{{ columnbox.index }}"
                {% if columnbox.height %}
                  data-height="{{ columnbox.height }}"
                {% endif %}
@@ -137,8 +136,7 @@ You can use vertical-item-fixed like this:
               {% for action in columnbox.actions %}
               <a href="#"
                  class="box-action {{ action.icon_class_or_default }} action-icon icon-white"
-                 data-temp-id="{{ column.index }}{{ columnbox.index }}{{
-                   action.slug }}"
+                 data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}"
                  ><div class="box-dialog"
                        data-title="{{ action }}"
                        data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}">
