@@ -42,4 +42,4 @@ admin.site.register(models.Layout, LayoutAdmin)
 admin.site.register(models.Column, ColumnAdmin)
 admin.site.register(models.Box, BoxAdmin)
 admin.site.register(models.PortalTab)
-
+admin.site.register(models.ColumnBox)
