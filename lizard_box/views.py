@@ -18,20 +18,7 @@ class LayoutView(UiView):
 
     @property
     def page_title(self):
-        return str(self.layout)
-
-    # @property
-    # def site_actions(self):
-    #     actions = []
-    #     for portal_tab in self.layout.portal_tabs.all():
-    #         actions.append(
-    #             Action(
-    #                 name=portal_tab.name,
-    #                 description=portal_tab.description,
-    #                 url=portal_tab.get_absolute_url(),
-    #                 icon=portal_tab.icon_class)
-    #             )
-    #     return actions + super(LayoutView, self).site_actions
+        return self.layout.title
 
     @property
     def layout(self):
