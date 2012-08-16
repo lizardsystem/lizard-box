@@ -67,6 +67,5 @@ class BoxView(UiView):
         case. Otherwise return None so that the fallback kicks in.
 
         """
-        icon = self.best_matching_application_icon
         if self.kwargs['slug'] == 'home':
             return [self.home_breadcrumb_element]
