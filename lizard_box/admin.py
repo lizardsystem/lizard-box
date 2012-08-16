@@ -34,6 +34,7 @@ class ColumnAdmin(admin.ModelAdmin):
 
 
 class BoxAdmin(admin.ModelAdmin):
+    list_display = ('slug', 'name', 'box_type', 'url')
     prepopulated_fields = {"slug": ("name", )}
 
 
