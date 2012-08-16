@@ -21,6 +21,11 @@ class LayoutView(UiView):
         return self.layout.title
 
     @property
+    def edit_link(self):
+        return '/admin/lizard_box/layout/{pk}/'.format(
+            pk=self.layout.pk)
+
+    @property
     def layout(self):
         return get_object_or_404(models.Layout, slug=self.kwargs['slug'])
 
