@@ -206,6 +206,10 @@ class ColumnBox(models.Model):
     class Meta:
         ordering = ('index', )
 
+    def __unicode__(self):
+        return '{name} (in column {column})'.format(name=self.name,
+                                                    column=self.column)
+
     # add box_parameters?
     def render_box(self):
         return self.box.render()
