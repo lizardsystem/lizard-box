@@ -36,7 +36,8 @@ initBoxDialog = () ->
         title: $(this).attr("data-title"),
         minHeight: 300,
         width: 960,
-        height: 500
+        height: 500,
+        position: 'bottom'
       })
       # Levee
       # position: "bottom" and height: 400 does not have the desired

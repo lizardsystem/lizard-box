@@ -31,7 +31,8 @@
         title: $(this).attr("data-title"),
         minHeight: 300,
         width: 960,
-        height: 500
+        height: 500,
+        position: 'bottom'
       });
       return $("body").data(data_attr_init, true);
     });
