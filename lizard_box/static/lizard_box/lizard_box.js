@@ -190,7 +190,11 @@
   $(function() {
     $(".evenly-spaced-vertical").height($(window).height() - $("header").height() - $("#footer").height());
     $(".vertical-item-fixed").each(function(index, elem) {
-      return $(elem).height($(elem).attr('data-height'));
+      var header_height, new_height;
+      new_height = $(elem).attr('data-height');
+      $(elem).height(new_height);
+      header_height = $(".box-header", elem).outerHeight();
+      return $(".box-contents", elem).innerHeight(new_height - header_height);
     });
     $("#main-container").on("DOMNodeInserted", function(event) {
       console.log("DOM modified event");

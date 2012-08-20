@@ -210,7 +210,10 @@ $ ->
 
     # apply all fixed heights
     $(".vertical-item-fixed").each (index, elem) ->
-        $(elem).height($(elem).attr('data-height'))
+        new_height = $(elem).attr('data-height')
+        $(elem).height(new_height)
+        header_height = $(".box-header", elem).outerHeight()
+        $(".box-contents", elem).innerHeight(new_height - header_height)
 
     # make .box-dialog show dialogs
     # $(".box-dialog").live("click", () ->
