@@ -98,7 +98,8 @@ class Column(models.Model):
         ordering = ('layout', 'index', )
 
     def __unicode__(self):
-        return u'%s %d' % (self.layout, self.index)
+        return 'Column {index} (layout {layout})'.format(layout=self.layout,
+                                                         index=self.index)
 
 
 class Box(models.Model):

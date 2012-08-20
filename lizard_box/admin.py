@@ -27,7 +27,7 @@ class LayoutAdmin(admin.ModelAdmin):
 
 
 class ColumnAdmin(admin.ModelAdmin):
-    list_display = ('layout', 'index', )
+    list_display = ('__unicode__', 'layout', 'index', )
     inlines = [
         ColumnBoxInline,
         ]
