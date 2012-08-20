@@ -142,7 +142,11 @@ You can use vertical-item-fixed like this:
                  class="box-action {{ action.icon_class_or_default }} action-icon icon-white"
                  data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}"
                  ><div class="box-dialog"
-                       data-title="{{ action }}"
+                       {% if user.is_superuser %}
+                         data-title="{{ action }} <a href='/admin/lizard_box/box/{{ action.pk }}/' class='icon-edit action-icon'>&nbsp;</a>"
+                       {% else %}
+                         data-title="{{ action }}"
+                       {% endif %}
                        data-temp-id="{{ column.index }}{{ columnbox.index }}{{ action.slug }}">
                   {% autoescape off %}{{ action.render_popup }}{% endautoescape %}
               </div></a>
