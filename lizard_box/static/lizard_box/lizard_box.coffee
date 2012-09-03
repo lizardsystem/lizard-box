@@ -151,11 +151,18 @@ initSelectAllNone = () ->
 initLeveeGraphs = () ->
   $(".box-action.image-map-dialog").unbind()
   $(".box-action.image-map-dialog").click(() ->
-    alert("click")
     # Create a dialog with iframe to the href
     url = $(this).attr("href")
     title = $(this).attr("title")
-    alert("url " + url + " title " + title)
+    $('<div class="on-the-fly-dialog"><iframe class="box" src="'+url+'" frameborder="0">popup</iframe></div>').dialog({
+      autoOpen: true,
+      title: title,
+      minHeight: 300,
+      width: 960,
+      height: 500,
+      position: 'bottom'
+    })
+
   )
 
 

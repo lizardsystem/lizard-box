@@ -141,10 +141,16 @@
     $(".box-action.image-map-dialog").unbind();
     return $(".box-action.image-map-dialog").click(function() {
       var title, url;
-      alert("click");
       url = $(this).attr("href");
       title = $(this).attr("title");
-      return alert("url " + url + " title " + title);
+      return $('<div class="on-the-fly-dialog"><iframe class="box" src="' + url + '" frameborder="0">popup</iframe></div>').dialog({
+        autoOpen: true,
+        title: title,
+        minHeight: 300,
+        width: 960,
+        height: 500,
+        position: 'bottom'
+      });
     });
   };
 
