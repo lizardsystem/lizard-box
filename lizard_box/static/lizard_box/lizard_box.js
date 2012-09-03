@@ -1,5 +1,5 @@
 (function() {
-  var columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initLevee, initSelectAllNone, initTargetLink, javascriptReplace, postFilterMeasurements;
+  var columnBoxRefresh, divideVerticalSpaceEqually, initBoxDialog, initColumnBoxRefresh, initLevee, initLeveeGraphs, initSelectAllNone, initTargetLink, javascriptReplace, postFilterMeasurements;
 
   divideVerticalSpaceEqually = function() {
     " For .evenly-spaced-vertical, divide the vertical space evenly between\nthe .vertical-item elements.  Take note of the 4px border between\nthem. Inspired by lizard-ui.\nHandy for forms underneath the graphs, boxes, ....";    return $(".evenly-spaced-vertical").each(function(index, element) {
@@ -137,6 +137,17 @@
     });
   };
 
+  initLeveeGraphs = function() {
+    $("box-action image-map-dialog").unbind();
+    return $("box-action image-map-dialog").click(function() {
+      var title, url;
+      alert("click");
+      url = $(this).attr("href");
+      title = $(this).attr("title");
+      return alert("url " + url + " title " + title);
+    });
+  };
+
   initLevee = function() {
     $("#filter-measurements input").die();
     $("#filter-measurements input").live("change", postFilterMeasurements);
@@ -173,7 +184,7 @@
       });
     });
     $("input.select-point").die();
-    return $("input.select-point").live("change", function() {
+    $("input.select-point").live("change", function() {
       var data, form, url;
       form = $(this).parents("form");
       url = form.attr("action");
@@ -186,6 +197,7 @@
         return $("#point-set-graphs").html($(data).find("#point-set-graphs").html());
       });
     });
+    return initLeveeGraphs();
   };
 
   $(function() {

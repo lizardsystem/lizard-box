@@ -110,6 +110,8 @@ javascriptReplace = ($selector) ->
 # Levee specific
 #
 #
+
+# Filter leveranciers in specialistenscherm
 postFilterMeasurements = () ->
     form = $("#filter-measurements")
     url = form.attr("action")
@@ -130,6 +132,7 @@ postFilterMeasurements = () ->
       $target.load(url)
     )
 
+# In specialistenscherm: alle leveranciers, geen
 initSelectAllNone = () ->
   $("a.select-all").live("click", (event) ->
     event.preventDefault()
@@ -143,6 +146,18 @@ initSelectAllNone = () ->
     postFilterMeasurements()
     return false
   )
+
+
+initLeveeGraphs = () ->
+  $("box-action image-map-dialog").unbind()
+  $("box-action image-map-dialog").click(() ->
+    alert("click")
+    # Create a dialog with iframe to the href
+    url = $(this).attr("href")
+    title = $(this).attr("title")
+    alert("url " + url + " title " + title)
+  )
+
 
 initLevee = () ->
   $("#filter-measurements input").die()
@@ -198,6 +213,8 @@ initLevee = () ->
       $("#point-set-graphs").html($(data).find("#point-set-graphs").html())
     )
   )
+
+  initLeveeGraphs()
 
 #
 # End levee specific
