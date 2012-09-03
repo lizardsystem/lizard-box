@@ -148,6 +148,7 @@ initSelectAllNone = () ->
   )
 
 
+# Initializes a new popup; elements are destroyed after closing.
 initLeveeGraphs = () ->
   $(".box-action.image-map-dialog").unbind()
   $(".box-action.image-map-dialog").click(() ->
@@ -161,6 +162,8 @@ initLeveeGraphs = () ->
       width: 960,
       height: 500,
       position: 'bottom'
+      close: () ->
+        $(this).dialog('destroy');
     })
 
   )

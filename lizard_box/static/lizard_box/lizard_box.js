@@ -149,7 +149,10 @@
         minHeight: 300,
         width: 960,
         height: 500,
-        position: 'bottom'
+        position: 'bottom',
+        close: function() {
+          return $(this).dialog('destroy');
+        }
       });
     });
   };
