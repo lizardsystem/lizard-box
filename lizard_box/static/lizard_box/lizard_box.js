@@ -138,8 +138,8 @@
   };
 
   initLeveeGraphs = function() {
-    $("box-action image-map-dialog").unbind();
-    return $("box-action image-map-dialog").click(function() {
+    $(".box-action.image-map-dialog").unbind();
+    return $(".box-action.image-map-dialog").click(function() {
       var title, url;
       alert("click");
       url = $(this).attr("href");

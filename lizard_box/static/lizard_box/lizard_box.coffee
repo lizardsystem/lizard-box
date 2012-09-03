@@ -149,8 +149,8 @@ initSelectAllNone = () ->
 
 
 initLeveeGraphs = () ->
-  $("box-action image-map-dialog").unbind()
-  $("box-action image-map-dialog").click(() ->
+  $(".box-action.image-map-dialog").unbind()
+  $(".box-action.image-map-dialog").click(() ->
     alert("click")
     # Create a dialog with iframe to the href
     url = $(this).attr("href")
