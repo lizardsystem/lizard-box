@@ -2,7 +2,7 @@ Changelog of lizard-box
 ===================================================
 
 
-0.2 (unreleased)
+0.2 (2012-09-10)
 ----------------
 
 - Added javascript-loaded boxes, for when you need popups that are
