@@ -5,7 +5,7 @@ Changelog of lizard-box
 0.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Removed footer, changed colors of layout.
 
 
 0.2 (2012-09-10)
